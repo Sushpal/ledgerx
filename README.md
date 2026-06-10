@@ -100,6 +100,14 @@ This mirrors how banks actually work. If a transfer fails mid-way, no balance is
 ### 📜 Transaction History
 
 ![History](./docs/History.png)
+
+## 🚀 Live Demo
+
+**Frontend:** https://ledgerx-alpha.vercel.app
+
+**Backend API:** https://ledgerx-4wpe.onrender.com
+
+> ⚠️ Backend is hosted on Render free tier. The first request may take 30–50 seconds to wake up.
 ---
 
 
