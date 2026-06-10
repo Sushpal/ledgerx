@@ -14,7 +14,7 @@ const useAuth = () => {
   setError(null);
   try {
     const res = await loginAPI({ email, password });
-    login(res.data.data.user, res.data.data.token); // fix here
+    login(res.data.data.user, res.data.data.token); 
     navigate("/home");
   } catch (err) {
     setError(err.response?.data?.message || "Login failed");
@@ -28,7 +28,7 @@ const useAuth = () => {
   setError(null);
   try {
     const res = await registerAPI({ name, email, password });
-    login(res.data.data.user, res.data.data.token); // fix here
+    login(res.data.data.user, res.data.data.token); 
     navigate("/home");
   } catch (err) {
     setError(err.response?.data?.message || "Registration failed");
