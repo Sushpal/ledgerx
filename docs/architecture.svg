@@ -1,0 +1,123 @@
+<svg viewBox="0 0 900 720" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f0f0f"/>
+      <stop offset="100%" stop-color="#151520"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#c8a96e"/>
+      <stop offset="100%" stop-color="#e0c080"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="720" fill="url(#bgGrad)" rx="16"/>
+
+  <!-- Title -->
+  <text x="450" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#f0ede8" letter-spacing="1">Ledger<tspan fill="#c8a96e">X</tspan> — System Architecture</text>
+
+  <!-- ─── ROW 1: User ─── -->
+  <rect x="375" y="68" width="150" height="44" rx="10" fill="#1a1a2e" stroke="#c8a96e" stroke-width="1.5"/>
+  <text x="450" y="95" text-anchor="middle" font-size="13" font-weight="600" fill="#f0ede8">👤 User</text>
+
+  <!-- arrow down -->
+  <line x1="450" y1="112" x2="450" y2="134" stroke="#c8a96e" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="444,131 450,143 456,131" fill="#c8a96e"/>
+
+  <!-- ─── ROW 2: React Frontend ─── -->
+  <rect x="300" y="144" width="300" height="54" rx="10" fill="#1a1a2e" stroke="#61dafb" stroke-width="1.5"/>
+  <text x="450" y="167" text-anchor="middle" font-size="13" font-weight="600" fill="#61dafb">⚛ React Frontend</text>
+  <text x="450" y="185" text-anchor="middle" font-size="10" fill="#8a8480">Vite · Tailwind CSS · React Router · Axios</text>
+
+  <!-- arrow down -->
+  <line x1="450" y1="198" x2="450" y2="220" stroke="#c8a96e" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="444,217 450,229 456,217" fill="#c8a96e"/>
+
+  <!-- ─── ROW 3: Express API ─── -->
+  <rect x="300" y="230" width="300" height="44" rx="10" fill="#1a1a2e" stroke="#c8a96e" stroke-width="1.5"/>
+  <text x="450" y="253" text-anchor="middle" font-size="13" font-weight="600" fill="#c8a96e">Express REST API</text>
+  <text x="450" y="267" text-anchor="middle" font-size="10" fill="#8a8480">Node.js · JWT Middleware · CORS</text>
+
+  <!-- 3 arrows down to services -->
+  <line x1="220" y1="274" x2="220" y2="310" stroke="#444" stroke-width="1.2"/>
+  <polygon points="214,307 220,319 226,307" fill="#444"/>
+  <line x1="450" y1="274" x2="450" y2="310" stroke="#444" stroke-width="1.2"/>
+  <polygon points="444,307 450,319 456,307" fill="#444"/>
+  <line x1="680" y1="274" x2="680" y2="310" stroke="#444" stroke-width="1.2"/>
+  <polygon points="674,307 680,319 686,307" fill="#444"/>
+
+  <!-- horizontal connector line -->
+  <line x1="220" y1="274" x2="680" y2="274" stroke="#333" stroke-width="1.2"/>
+
+  <!-- ─── ROW 4: 3 Services ─── -->
+  <!-- Auth Service -->
+  <rect x="100" y="320" width="240" height="90" rx="10" fill="#1a1a2e" stroke="#a855f7" stroke-width="1.5"/>
+  <text x="220" y="342" text-anchor="middle" font-size="12" font-weight="700" fill="#a855f7">🔐 Auth Service</text>
+  <text x="220" y="360" text-anchor="middle" font-size="10" fill="#8a8480">POST /api/auth/register</text>
+  <text x="220" y="375" text-anchor="middle" font-size="10" fill="#8a8480">POST /api/auth/login</text>
+  <text x="220" y="390" text-anchor="middle" font-size="10" fill="#8a8480">POST /api/auth/logout</text>
+  <text x="220" y="403" text-anchor="middle" font-size="9" fill="#6b6b8a">bcrypt · JWT · Token Blacklist · TTL</text>
+
+  <!-- Account Service -->
+  <rect x="370" y="320" width="160" height="90" rx="10" fill="#1a1a2e" stroke="#4ade80" stroke-width="1.5"/>
+  <text x="450" y="342" text-anchor="middle" font-size="12" font-weight="700" fill="#4ade80">🏦 Account Service</text>
+  <text x="450" y="360" text-anchor="middle" font-size="10" fill="#8a8480">POST /api/accounts</text>
+  <text x="450" y="375" text-anchor="middle" font-size="10" fill="#8a8480">GET  /api/accounts</text>
+  <text x="450" y="390" text-anchor="middle" font-size="10" fill="#8a8480">GET  /api/accounts/balance</text>
+  <text x="450" y="403" text-anchor="middle" font-size="9" fill="#6b6b8a">Account Numbers · getBalance()</text>
+
+  <!-- Transaction Service -->
+  <rect x="560" y="320" width="240" height="90" rx="10" fill="#1a1a2e" stroke="#f87171" stroke-width="1.5"/>
+  <text x="680" y="342" text-anchor="middle" font-size="12" font-weight="700" fill="#f87171">⚡ Transaction Service</text>
+  <text x="680" y="360" text-anchor="middle" font-size="10" fill="#8a8480">POST /api/transactions</text>
+  <text x="680" y="375" text-anchor="middle" font-size="10" fill="#8a8480">POST /api/transactions/system</text>
+  <text x="680" y="390" text-anchor="middle" font-size="10" fill="#8a8480">GET  /api/ledger/history/:id</text>
+  <text x="680" y="403" text-anchor="middle" font-size="9" fill="#6b6b8a">Idempotency · ACID · MongoDB Session</text>
+
+  <!-- arrows down to MongoDB -->
+  <line x1="220" y1="410" x2="220" y2="458" stroke="#444" stroke-width="1.2"/>
+  <polygon points="214,455 220,467 226,455" fill="#444"/>
+  <line x1="450" y1="410" x2="450" y2="458" stroke="#444" stroke-width="1.2"/>
+  <polygon points="444,455 450,467 456,455" fill="#444"/>
+  <line x1="680" y1="410" x2="680" y2="458" stroke="#444" stroke-width="1.2"/>
+  <polygon points="674,455 680,467 686,455" fill="#444"/>
+  <line x1="220" y1="458" x2="680" y2="458" stroke="#333" stroke-width="1.2"/>
+
+  <!-- ─── ROW 5: MongoDB ─── -->
+  <rect x="300" y="468" width="300" height="44" rx="10" fill="#1a1a2e" stroke="#47a248" stroke-width="1.5"/>
+  <text x="450" y="491" text-anchor="middle" font-size="13" font-weight="600" fill="#47a248">🍃 MongoDB Database</text>
+  <text x="450" y="505" text-anchor="middle" font-size="10" fill="#8a8480">Mongoose ODM · Atlas / Local</text>
+
+  <!-- 2 arrows down to collections -->
+  <line x1="330" y1="512" x2="270" y2="548" stroke="#333" stroke-width="1.2"/>
+  <polygon points="264,545 268,558 276,549" fill="#333"/>
+  <line x1="570" y1="512" x2="630" y2="548" stroke="#333" stroke-width="1.2"/>
+  <polygon points="624,545 632,558 636,547" fill="#333"/>
+
+  <!-- ─── ROW 6: Collections ─── -->
+  <!-- Transactions collection -->
+  <rect x="100" y="558" width="320" height="110" rx="10" fill="#0f1a10" stroke="#4ade80" stroke-width="1.5"/>
+  <text x="260" y="580" text-anchor="middle" font-size="12" font-weight="700" fill="#4ade80">📄 Transactions Collection</text>
+  <text x="260" y="598" text-anchor="middle" font-size="10" fill="#8a8480">fromAccount · toAccount · amount</text>
+  <text x="260" y="613" text-anchor="middle" font-size="10" fill="#8a8480">idempotencyKey (unique index)</text>
+  <text x="260" y="628" text-anchor="middle" font-size="10" fill="#8a8480">status: PENDING → COMPLETED</text>
+  <text x="260" y="643" text-anchor="middle" font-size="10" fill="#8a8480">FAILED · REVERSED</text>
+  <text x="260" y="658" text-anchor="middle" font-size="9" fill="#6b6b8a">Business Record · Session Wrapped</text>
+
+  <!-- Ledger collection -->
+  <rect x="480" y="558" width="320" height="110" rx="10" fill="#1a0f0f" stroke="#f87171" stroke-width="1.5"/>
+  <text x="640" y="580" text-anchor="middle" font-size="12" font-weight="700" fill="#f87171">📒 Ledger Collection</text>
+  <text x="640" y="598" text-anchor="middle" font-size="10" fill="#8a8480">account · transaction · type · amount</text>
+  <text x="640" y="613" text-anchor="middle" font-size="10" fill="#8a8480">type: DEBIT | CREDIT</text>
+  <text x="640" y="628" text-anchor="middle" font-size="10" fill="#8a8480">🔒 Immutable — pre-hooks block</text>
+  <text x="640" y="643" text-anchor="middle" font-size="10" fill="#8a8480">all update · delete · replace ops</text>
+  <text x="640" y="658" text-anchor="middle" font-size="9" fill="#6b6b8a">Accounting Source · Audit Trail</text>
+
+  <!-- balance formula at bottom -->
+  <rect x="240" y="682" width="420" height="26" rx="8" fill="#1a1a1a" stroke="#c8a96e" stroke-width="1"/>
+  <text x="450" y="700" text-anchor="middle" font-size="11" fill="#c8a96e" font-family="'Courier New', monospace">Balance = SUM(CREDIT) − SUM(DEBIT)  ·  Never stored · Always derived</text>
+</svg>
