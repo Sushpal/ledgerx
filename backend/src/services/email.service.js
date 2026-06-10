@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 });
 
 // Verify the connection configuration
-/** 
+
 transporter.verify((error, success) => {
   if (error) {
     console.error('Error connecting to email server:', error);
@@ -21,12 +21,12 @@ transporter.verify((error, success) => {
     console.log('Email server is ready to send messages');
   }
 });
-*/
+
 
 
 // Function to send email
 const sendEmail = async (to, subject, text, html) => {
-  console.log("Sending email to:", to);
+
   try {
     const info = await transporter.sendMail({
       from: `"LEDGERX" <${process.env.EMAIL_USER}>`, // sender address
