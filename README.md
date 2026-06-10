@@ -87,19 +87,19 @@ This mirrors how banks actually work. If a transfer fails mid-way, no balance is
 
 ### 🔐 Registration
 
-![Registration](./docs/register.png)
+![Registration](./docs/Register.png)
 
 ### 🏠 Dashboard
 
-![Dashboard](./docs/dashboard.png)
+![Dashboard](./docs/Dashboard.png)
 
 ### 💸 Transfers
 
-![Transfers](./docs/transfer.png)
+![Transfers](./docs/Transfer.png)
 
 ### 📜 Transaction History
 
-![History](./docs/history.png)
+![History](./docs/History.png)
 ---
 
 
