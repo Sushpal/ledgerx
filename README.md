@@ -141,9 +141,12 @@ Every transfer follows a strict 10-step pipeline:
         ▼
 10. Commit Session → Both entries saved atomically
     Any failure → Automatic rollback → No partial state
+        │
+        ▼
+11. Send Transaction Notification Email
 ```
 
-Steps 6–10 run inside a single MongoDB session. If anything fails at any step, the entire transaction rolls back. The sender's balance is never reduced unless the receiver's balance is increased by the same amount.
+Steps 6–11 run inside a single MongoDB session. If anything fails at any step, the entire transaction rolls back. The sender's balance is never reduced unless the receiver's balance is increased by the same amount.
 
 ---
 
@@ -196,8 +199,9 @@ This guarantees a permanent, tamper-proof audit trail of every money movement.
 - Passwords hashed with **bcrypt** before storage
 - Login returns a **JWT** (7-day expiry) stored in an HTTP cookie and localStorage
 - On logout, the token is added to a **blacklist collection** in MongoDB
-- Blacklisted tokens auto-expire after 3 days via a **MongoDB TTL index** — no manual cleanup needed
+- Blacklisted tokens auto-expire after 7 days via a **MongoDB TTL index** — no manual cleanup needed
 - Every protected route checks the blacklist before trusting a token
+- Registration triggers a welcome email via Nodemailer
 
 ---
 
@@ -242,6 +246,7 @@ This endpoint is protected by `authSystemUserMiddleware` — only requests authe
 | ⚡ ACID Transactions | MongoDB sessions — atomic commit or full rollback |
 | 📜 Transaction History | Full ledger history with sender/receiver account numbers |
 | 🔍 Account Switching | View history for any owned account |
+| 📧 Email Notifications | Automatic registration and transaction confirmation emails via Nodemailer |
 
 ---
 
@@ -268,10 +273,10 @@ ledgerx/
 │
 ├── docs/
 │   ├── architecture.svg
-│   ├── register.png
-│   ├── dashboard.png
-│   ├── transfer.png
-│   └── history.png
+│   ├── Register.png
+│   ├── Dashboard.png
+│   ├── Transfer.png
+│   └── History.png
 │
 ├── backend/
 │   ├── server.js
@@ -362,6 +367,7 @@ ledgerx/
 | Transactions | MongoDB Sessions | ACID atomicity |
 | Auth | JWT + bcrypt | Token auth + password hashing |
 | Token Expiry | MongoDB TTL Index | Auto-expire blacklisted tokens |
+| Email Service | Nodemailer | Registration and transaction notifications |
 
 ---
 
@@ -389,11 +395,12 @@ npm install
 Create `.env`:
 
 ```env
-PORT=3000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
+CLIENT_ID=your_google_client_id
+CLIENT_SECRET=your_google_client_secret
+REFRESH_TOKEN=your_google_refresh_token
 EMAIL_USER=your_email@gmail.com
-EMAIL_PASS=your_email_app_password
 ```
 
 Start backend:
@@ -444,8 +451,7 @@ This account can fund any user account via the system funding endpoint.
 - Transaction pagination and search
 - PDF account statements
 - Account freeze / unfreeze
-- Scheduled and recurring transfers
-- Email notifications on every transaction
+- Scheduled and recurring transfer
 - Dashboard analytics and spending trends
 - Role-based access control
 - Docker deployment
