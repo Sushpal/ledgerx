@@ -48,8 +48,10 @@ async function userRegisterController(req,res){
             token
         }
     })
-
+        console.log("Before email");
     await emailService.sendRegistrationEmail(user.email,user.name)
+    
+    console.log("After email");
 
 }
 
