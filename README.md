@@ -108,6 +108,7 @@ This mirrors how banks actually work. If a transfer fails mid-way, no balance is
 **Backend API:** https://ledgerx-4wpe.onrender.com
 
 > ⚠️ Backend is hosted on Render free tier. The first request may take 30–50 seconds to wake up.
+> 📧 Email notifications use Resend's testing mode. During development, emails can only be delivered to verified recipient addresses. Production deployment requires a verified custom domain.
 ---
 
 
@@ -209,7 +210,7 @@ This guarantees a permanent, tamper-proof audit trail of every money movement.
 - On logout, the token is added to a **blacklist collection** in MongoDB
 - Blacklisted tokens auto-expire after 7 days via a **MongoDB TTL index** — no manual cleanup needed
 - Every protected route checks the blacklist before trusting a token
-- Registration triggers a welcome email via Nodemailer
+- Registration triggers a welcome email via Resend
 
 ---
 
@@ -254,7 +255,7 @@ This endpoint is protected by `authSystemUserMiddleware` — only requests authe
 | ⚡ ACID Transactions | MongoDB sessions — atomic commit or full rollback |
 | 📜 Transaction History | Full ledger history with sender/receiver account numbers |
 | 🔍 Account Switching | View history for any owned account |
-| 📧 Email Notifications | Automatic registration and transaction confirmation emails via Nodemailer |
+| 📧 Email Notifications | Automatic registration and transaction confirmation emails via Resend |
 
 ---
 
@@ -304,7 +305,7 @@ ledgerx/
 │       │   ├── account.model.js          # getBalance() aggregate method
 │       │   ├── transaction.model.js      # PENDING/COMPLETED/FAILED/REVERSED
 │       │   ├── ledger.model.js           # immutable pre-hooks
-│       │   └── blackList.model.js        # TTL index — 3 day auto-expiry
+│       │   └── blackList.model.js        # TTL index — 7 day auto-expiry
 │       ├── routes/
 │       │   ├── auth.route.js
 │       │   ├── account.route.js
@@ -375,7 +376,7 @@ ledgerx/
 | Transactions | MongoDB Sessions | ACID atomicity |
 | Auth | JWT + bcrypt | Token auth + password hashing |
 | Token Expiry | MongoDB TTL Index | Auto-expire blacklisted tokens |
-| Email Service | Nodemailer | Registration and transaction notifications |
+| Email Service | Resend | Registration and transaction notifications |
 
 ---
 
@@ -405,10 +406,7 @@ Create `.env`:
 ```env
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
-CLIENT_ID=your_google_client_id
-CLIENT_SECRET=your_google_client_secret
-REFRESH_TOKEN=your_google_refresh_token
-EMAIL_USER=your_email@gmail.com
+RESEND_API_KEY=your_resend_api_key
 ```
 
 Start backend:
@@ -440,8 +438,7 @@ Open `http://localhost:5173` 🎉
 
 ### 4. Seed the system account
 
-Create a user in MongoDB with:
-
+Create a system user:
 ```json
 {
   "email": "systemledgerx@gmail.com",
@@ -449,8 +446,9 @@ Create a user in MongoDB with:
   "systemUser": true
 }
 ```
+Create an account linked to that user in the accounts collection.
 
-This account can fund any user account via the system funding endpoint.
+This account is used to fund newly created user accounts through the protected system funding endpoint.
 
 ---
 
