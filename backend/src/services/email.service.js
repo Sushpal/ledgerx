@@ -1,16 +1,23 @@
 require('dotenv').config();
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
+const dns = require("dns");
+
+// Force IPv4 resolution — fixes EHOSTUNREACH on IPv6
+dns.setDefaultResultOrder("ipv4first");
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
   auth: {
-    type: 'OAuth2',
+    type: "OAuth2",
     user: process.env.EMAIL_USER,
     clientId: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
     refreshToken: process.env.REFRESH_TOKEN,
   },
 });
+
 
 // Verify the connection configuration
 
