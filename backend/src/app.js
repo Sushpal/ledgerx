@@ -10,6 +10,9 @@
  const transactionRoutes = require('./routes/transaction.route')
  const ledgerRoutes = require("./routes/ledger.route");
 
+
+ const emailService = require("./services/email.service");
+
  
 
 
@@ -33,6 +36,6 @@
  app.use("/api/accounts",accountRouter)
  app.use("/api/transactions",transactionRoutes)
  app.use("/api/ledger", ledgerRoutes);
- 
+
 
  module.exports =app
