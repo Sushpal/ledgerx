@@ -1,14 +1,11 @@
 require('dotenv').config();
 const nodemailer = require("nodemailer");
-const dns = require("dns");
-
-// Force IPv4 resolution — fixes EHOSTUNREACH on IPv6
-dns.setDefaultResultOrder("ipv4first");
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
   secure: true,
+  family: 4,  // ← force IPv4 at socket level — stronger than dns.setDefaultResultOrder
   auth: {
     type: "OAuth2",
     user: process.env.EMAIL_USER,
@@ -18,17 +15,13 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-
-// Verify the connection configuration
-
 transporter.verify((error, success) => {
   if (error) {
-    console.error('Error connecting to email server:', error);
+    console.error("Error connecting to email server:", error);
   } else {
-    console.log('Email server is ready to send messages');
+    console.log("Email server is ready to send messages");
   }
 });
-
 
 
 // Function to send email
