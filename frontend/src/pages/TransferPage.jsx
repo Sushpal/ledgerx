@@ -7,7 +7,6 @@ import useTransactions from "../hooks/useTransactions";
 import { useAuthContext } from "../context/AuthContext";
 import LoadingSpinner from "../components/LoadingSpinner";
 
-// Result card — shown after success or failure
 const ResultCard = ({ result, onDismiss }) => {
   const isSuccess = result.success;
 
@@ -25,7 +24,7 @@ const ResultCard = ({ result, onDismiss }) => {
             {isSuccess ? "Transfer successful" : "Transfer failed"}
           </p>
           {isSuccess && result.idempotencyKey && (
-            <p className="font-mono text-xs text-[#8a8480]">
+            <p className="font-mono text-xs text-warm-grey">
               Request ID: {result.idempotencyKey}
             </p>
           )}
@@ -37,7 +36,7 @@ const ResultCard = ({ result, onDismiss }) => {
         </div>
         <button
           onClick={onDismiss}
-          className="text-[#4a4744] hover:text-[#8a8480] transition-colors text-lg leading-none cursor-pointer flex-shrink-0"
+          className="text-[#4a4744] hover:text-warm-grey transition-colors text-lg leading-none cursor-pointer flex-shrink-0"
         >
           ×
         </button>
@@ -47,12 +46,12 @@ const ResultCard = ({ result, onDismiss }) => {
 };
 
 const TransferPage = () => {
-  const { isSystemUser }                       = useAuthContext();
+  const { isSystemUser }                   = useAuthContext();
   const { accounts, loading: acctLoading,
-          error: acctError, fetchAccounts }     = useAccounts();
+          error: acctError, fetchAccounts } = useAccounts();
   const { createTransaction, fundAccount,
-          loading: txLoading }                  = useTransactions();
-  const [result, setResult]                    = useState(null);
+          loading: txLoading }              = useTransactions();
+  const [result, setResult]                = useState(null);
 
   useEffect(() => {
     fetchAccounts();
@@ -96,10 +95,10 @@ const TransferPage = () => {
       <main className="pt-24 px-6 max-w-2xl mx-auto pb-16">
 
         <div className="mb-8">
-          <h1 className="text-xl font-semibold text-[#f0ede8]">
+          <h1 className="text-xl font-semibold text-cream">
             {isSystemUser ? "System transfers" : "Transfer"}
           </h1>
-          <p className="text-sm text-[#8a8480] mt-1">
+          <p className="text-sm text-warm-grey mt-1">
             {isSystemUser
               ? "Fund accounts or transfer between accounts"
               : "Send money to another account"}
@@ -123,7 +122,7 @@ const TransferPage = () => {
             <p className="text-sm text-[#f87171]">{acctError}</p>
             <button
               onClick={fetchAccounts}
-              className="mt-2 text-xs text-[#c8a96e] hover:opacity-80 transition-opacity cursor-pointer"
+              className="mt-2 text-xs text-gold hover:opacity-80 transition-opacity cursor-pointer"
             >
               Try again
             </button>
@@ -131,8 +130,8 @@ const TransferPage = () => {
         )}
 
         {!acctLoading && !acctError && accounts.length === 0 && (
-          <div className="bg-[#1a1a1a] border border-[#272727] rounded-xl px-5 py-10 text-center">
-            <p className="text-sm text-[#8a8480]">No accounts found</p>
+          <div className="bg-card-bg border border-border-subtle rounded-xl px-5 py-10 text-center">
+            <p className="text-sm text-warm-grey">No accounts found</p>
             <p className="text-xs text-[#4a4744] mt-1">
               Create an account on the Home page first
             </p>
@@ -154,7 +153,7 @@ const TransferPage = () => {
                 onSubmit={handleTransfer}
                 loading={txLoading}
               />
-)}
+            )}
           </div>
         )}
       </main>

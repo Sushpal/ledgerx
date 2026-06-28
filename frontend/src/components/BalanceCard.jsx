@@ -26,7 +26,6 @@ const BalanceCard = ({ accounts }) => {
     setLoadingBal(false);
   };
 
-  // Reset when account changes
   const handleSelect = (e) => {
     setSelectedId(e.target.value);
     setBalance(null);
@@ -34,11 +33,11 @@ const BalanceCard = ({ accounts }) => {
   };
 
   return (
-    <div className="bg-[#1a1a1a] border border-[#272727] rounded-xl p-5">
-      <h3 className="text-sm font-semibold text-[#f0ede8] mb-1">
+    <div className="bg-card-bg border border-border-subtle rounded-xl p-5">
+      <h3 className="text-sm font-semibold text-cream mb-1">
         Check balance
       </h3>
-      <p className="text-xs text-[#8a8480] mb-4">
+      <p className="text-xs text-warm-grey mb-4">
         Select an account to see its current balance
       </p>
 
@@ -46,7 +45,7 @@ const BalanceCard = ({ accounts }) => {
         <select
           value={selectedId}
           onChange={handleSelect}
-          className="flex-1 bg-[#151515] border border-[#303030] rounded-lg px-3 py-2.5 text-sm text-[#f0ede8] outline-none focus:border-[#c8a96e] transition-colors cursor-pointer"
+          className="flex-1 bg-dark-bg border border-[#303030] rounded-lg px-3 py-2.5 text-sm text-cream outline-none focus:border-gold transition-colors cursor-pointer"
         >
           <option value="" disabled className="text-[#4a4744]">
             Select account
@@ -61,18 +60,17 @@ const BalanceCard = ({ accounts }) => {
         <button
           onClick={handleCheck}
           disabled={!selectedId || loadingBal}
-          className="flex items-center gap-2 px-4 py-2.5 bg-[#c8a96e] text-[#0f0f0f] text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-40 cursor-pointer"
+          className="flex items-center gap-2 px-4 py-2.5 bg-gold text-[#0f0f0f] text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-40 cursor-pointer"
         >
           {loadingBal ? <LoadingSpinner size="sm" /> : null}
           {loadingBal ? "Checking..." : "Get balance"}
         </button>
       </div>
 
-      {/* Balance result */}
       {balance !== null && (
-        <div className="flex items-center justify-between bg-[#151515] border border-[#272727] rounded-lg px-4 py-3">
-          <span className="text-xs text-[#8a8480]">Available balance</span>
-          <span className="font-mono text-lg font-medium text-[#f0ede8]">
+        <div className="flex items-center justify-between bg-dark-bg border border-border-subtle rounded-lg px-4 py-3">
+          <span className="text-xs text-warm-grey">Available balance</span>
+          <span className="font-mono text-lg font-medium text-cream">
             {formatCurrency(balance)}
           </span>
         </div>

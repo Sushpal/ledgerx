@@ -1,8 +1,8 @@
 const TransactionHistory = ({ history }) => {
   if (history.length === 0) {
     return (
-      <div className="bg-[#1a1a1a] border border-[#272727] rounded-xl p-6">
-        <p className="text-sm text-[#8a8480]">
+      <div className="bg-card-bg border border-border-subtle rounded-xl p-6">
+        <p className="text-sm text-warm-grey">
           No transactions found
         </p>
       </div>
@@ -10,14 +10,14 @@ const TransactionHistory = ({ history }) => {
   }
 
   return (
-    <div className="bg-[#1a1a1a] border border-[#272727] rounded-xl overflow-hidden">
-      <div className="px-5 py-4 border-b border-[#272727]">
-        <h2 className="text-sm font-semibold text-[#f0ede8]">
+    <div className="bg-card-bg border border-border-subtle rounded-xl overflow-hidden">
+      <div className="px-5 py-4 border-b border-border-subtle">
+        <h2 className="text-sm font-semibold text-cream">
           Transaction History
         </h2>
       </div>
 
-      <div className="divide-y divide-[#272727]">
+      <div className="divide-y divide-border-subtle">
         {history.map((entry) => (
           <div
             key={entry._id}
@@ -34,14 +34,14 @@ const TransactionHistory = ({ history }) => {
                 {entry.type}
               </p>
 
-              <p className="text-xs text-[#8a8480]">
+              <p className="text-xs text-warm-grey">
                 {new Date(entry.createdAt).toLocaleString()}
               </p>
-              <p className="text-xs text-[#8a8480] mt-1">
+              <p className="text-xs text-warm-grey mt-1">
                 {entry.type === "CREDIT"
                     ? `Received from ${entry.transaction?.fromAccount?.accountNumber || "SYSTEM"}`
                     : `Sent to ${entry.transaction?.toAccount?.accountNumber}`}
-                </p>
+              </p>
             </div>
 
             <span

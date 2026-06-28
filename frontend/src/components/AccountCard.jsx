@@ -10,9 +10,9 @@ const STATUS_STYLES = {
     bg: "bg-[#93c5fd10] border-[#93c5fd25]",
   },
   CLOSED: {
-    dot: "bg-[#8a8480]",
-    text: "text-[#8a8480]",
-    bg: "bg-[#8a848010] border-[#8a848025]",
+    dot: "bg-warm-grey",
+    text: "text-warm-grey",
+    bg: "bg-warm-grey/10 border-warm-grey/20",
   },
 };
 
@@ -22,12 +22,12 @@ const AccountCard = ({ account }) => {
   const accountNumber = account.accountNumber;
 
   return (
-    <div className="bg-[#1a1a1a] border border-[#272727] rounded-xl p-4 flex items-center justify-between">
+    <div className="bg-card-bg border border-border-subtle rounded-xl p-4 flex items-center justify-between">
       <div className="flex flex-col gap-1">
         <span className="font-mono text-xs text-[#4a4744] tracking-widest">
           {accountNumber}
         </span>
-        <span className="font-mono text-xs text-[#8a8480]">
+        <span className="font-mono text-xs text-warm-grey">
           INR · {account.currency || "INR"}
         </span>
       </div>

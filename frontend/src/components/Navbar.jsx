@@ -11,7 +11,6 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef                     = useRef(null);
 
-  // Close dropdown on outside click
   useEffect(() => {
     const handler = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -29,10 +28,10 @@ const Navbar = () => {
     : "?";
 
   return (
-  <nav className="fixed top-0 left-0 right-0 z-50 h-16 bg-[#151515] border-b border-[#272727] flex items-center px-6">
+  <nav className="fixed top-0 left-0 right-0 z-50 h-16 bg-dark-bg border-b border-border-subtle flex items-center px-6">
       {/* Logo */}
-      <Link to="/home" className="font-mono text-sm font-medium text-[#f0ede8] mr-10 tracking-tight">
-        Ledger<span className="text-[#c8a96e]">X</span>
+      <Link to="/home" className="font-mono text-sm font-medium text-cream mr-10 tracking-tight">
+        Ledger<span className="text-gold">X</span>
       </Link>
 
       {/* Nav links */}
@@ -41,8 +40,8 @@ const Navbar = () => {
           to="/home"
           className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
             isActive("/home")
-              ? "text-[#f0ede8] bg-[#272727]"
-              : "text-[#8a8480] hover:text-[#f0ede8] hover:bg-[#1a1a1a]"
+              ? "text-cream bg-border-subtle"
+              : "text-warm-grey hover:text-cream hover:bg-card-bg"
           }`}
         >
           Home
@@ -51,8 +50,8 @@ const Navbar = () => {
           to="/transfer"
           className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
             isActive("/transfer")
-              ? "text-[#f0ede8] bg-[#272727]"
-              : "text-[#8a8480] hover:text-[#f0ede8] hover:bg-[#1a1a1a]"
+              ? "text-cream bg-border-subtle"
+              : "text-warm-grey hover:text-cream hover:bg-card-bg"
           }`}
         >
           Transfer
@@ -61,8 +60,8 @@ const Navbar = () => {
           to="/history"
           className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
             isActive("/history")
-              ? "text-[#f0ede8] bg-[#272727]"
-              : "text-[#8a8480] hover:text-[#f0ede8] hover:bg-[#1a1a1a]"
+              ? "text-cream bg-border-subtle"
+              : "text-warm-grey hover:text-cream hover:bg-card-bg"
           }`}
         >
           History
@@ -73,20 +72,20 @@ const Navbar = () => {
       <div className="ml-auto relative" ref={dropdownRef}>
         <button
           onClick={() => setDropdownOpen((prev) => !prev)}
-          className="w-8 h-8 rounded-full bg-[#c8a96e1a] border border-[#c8a96e30] flex items-center justify-center text-xs font-semibold text-[#c8a96e] hover:opacity-80 transition-opacity cursor-pointer"
+          className="w-8 h-8 rounded-full bg-gold/10 border border-gold/20 flex items-center justify-center text-xs font-semibold text-gold hover:opacity-80 transition-opacity cursor-pointer"
         >
           {initials}
         </button>
 
         {dropdownOpen && (
-          <div className="absolute right-0 top-10 w-52 bg-[#1a1a1a] border border-[#272727] rounded-xl shadow-xl overflow-hidden z-50">
+          <div className="absolute right-0 top-10 w-52 bg-card-bg border border-border-subtle rounded-xl shadow-xl overflow-hidden z-50">
 
             {/* User info */}
-            <div className="px-4 py-3 border-b border-[#272727]">
-              <p className="text-sm font-medium text-[#f0ede8] truncate">
+            <div className="px-4 py-3 border-b border-border-subtle">
+              <p className="text-sm font-medium text-cream truncate">
                 {user?.name}
               </p>
-              <p className="text-xs text-[#8a8480] truncate mt-0.5">
+              <p className="text-xs text-warm-grey truncate mt-0.5">
                 {user?.email}
               </p>
             </div>
@@ -96,7 +95,7 @@ const Navbar = () => {
               <Link
                 to="/profile"
                 onClick={() => setDropdownOpen(false)}
-                className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-[#8a8480] hover:text-[#f0ede8] hover:bg-[#272727] transition-colors"
+                className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-warm-grey hover:text-cream hover:bg-border-subtle transition-colors"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <circle cx="12" cy="8" r="4"/>
@@ -108,7 +107,7 @@ const Navbar = () => {
               <button
                 onClick={() => { setDropdownOpen(false); handleLogout(); }}
                 disabled={loading}
-                className="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm text-[#f87171] hover:bg-[#272727] transition-colors disabled:opacity-50 cursor-pointer"
+                className="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm text-[#f87171] hover:bg-border-subtle transition-colors disabled:opacity-50 cursor-pointer"
               >
                 {loading ? (
                   <LoadingSpinner size="sm" />
