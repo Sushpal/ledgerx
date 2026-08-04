@@ -75,11 +75,6 @@ async function createTransaction(req, res) {
             })
         }
 
-        if (isTransactionAlreadyExists.status === "REVERSED") {
-            return res.status(500).json({
-                message: "Transaction was reversed, please retry"
-            })
-        }
     }
 
     /**
@@ -104,13 +99,13 @@ async function createTransaction(req, res) {
     }
 
     let transaction;
+    let session;
     try {
-
 
         /**
          * 5. Create transaction (PENDING)
          */
-        const session = await mongoose.startSession()
+        session = await mongoose.startSession()
         session.startTransaction()
 
         transaction = (await transactionModel.create([{
@@ -149,7 +144,8 @@ async function createTransaction(req, res) {
         await session.commitTransaction()
         session.endSession()
     } catch (error) {
-
+        await session.abortTransaction() 
+        session.endSession()
         return res.status(400).json({
             message: "Transaction is Pending due to some issue, please retry after sometime",
         })
@@ -195,45 +191,61 @@ async function createInitialFundsTransaction(req, res) {
             message: "System user account not found"
         })
     }
-
-
-    const session = await mongoose.startSession()
-    session.startTransaction()
-
-    const transaction = new transactionModel({
-        fromAccount: fromUserAccount._id,
-        toAccount: toUserAccount._id,
-        amount,
-        idempotencyKey,
-        status: "PENDING"
+        const isTransactionAlreadyExists = await transactionModel.findOne({
+        idempotencyKey: idempotencyKey
     })
 
-    const debitLedgerEntry = await ledgerModel.create([ {
-        account: fromUserAccount._id,
-        amount: amount,
-        transaction: transaction._id,
-        type: "DEBIT"
-    } ], { session })
+    if (isTransactionAlreadyExists) {
+    return res.status(200).json({
+        message: "Transaction already processed",
+        transaction: isTransactionAlreadyExists
+        })
+    }
+    let session;
+    try {
+        session = await mongoose.startSession()
+        session.startTransaction()
 
-    const creditLedgerEntry = await ledgerModel.create([ {
-        account: toUserAccount._id,
-        amount: amount,
-        transaction: transaction._id,
-        type: "CREDIT"
-    } ], { session })
+        
+            const transaction = new transactionModel({
+            fromAccount: fromUserAccount._id,
+            toAccount: toUserAccount._id,
+            amount,
+            idempotencyKey,
+            status: "PENDING"
+        })
 
-    transaction.status = "COMPLETED"
-    await transaction.save({ session })
+        const debitLedgerEntry = await ledgerModel.create([{
+            account: fromUserAccount._id,
+            amount: amount,
+            transaction: transaction._id,
+            type: "DEBIT"
+        }], { session })
 
-    await session.commitTransaction()
-    session.endSession()
+        const creditLedgerEntry = await ledgerModel.create([{
+            account: toUserAccount._id,
+            amount: amount,
+            transaction: transaction._id,
+            type: "CREDIT"
+        }], { session })
 
-    return res.status(201).json({
-        message: "Initial funds transaction completed successfully",
-        transaction: transaction
-    })
+        transaction.status = "COMPLETED"
+        await transaction.save({ session })
 
+        await session.commitTransaction()
+        session.endSession()
 
+        return res.status(201).json({
+            message: "Initial funds transaction completed successfully",
+            transaction: transaction
+        })
+    } catch (error) {
+        await session.abortTransaction() 
+        session.endSession()             
+        return res.status(500).json({
+            message: "Initial funds transfer failed, please retry"
+        })
+    }
 }
 
 module.exports = {
