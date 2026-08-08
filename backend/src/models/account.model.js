@@ -8,7 +8,7 @@ const accountSchema = new mongoose.Schema({
             type:mongoose.Schema.Types.ObjectId,
             ref:"user",
             required:[true,"Account must be associated with a user"],
-            index: true // to search(for fast optimization , it uses b+ tree) the no. of accounts for a  fast we use index
+            index: true // to search(for fast optimization , it uses b tree) the no. of accounts for a  fast we use index
         },
         accountNumber:{
             type:String,
